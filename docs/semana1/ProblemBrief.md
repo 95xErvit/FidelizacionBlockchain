@@ -4,27 +4,25 @@
 
 ### Problema elegido
 
-> El problema ganador en una frase, sin mencionar blockchain, y quién lo propuso.
-
-Escriban aquí su respuesta.
+Red de Fidelización y Puntos Inter-Comercio Tokenizados: Los tenderos locales no pueden sostener programas de fidelización atractivos porque los puntos emitidos de forma aislada tienen poca utilidad para el cliente y las soluciones tecnológicas propietarias son costosas de desarrollar, mantener y operar. 
 
 ### Por qué elegimos este
 
-> Qué inclinó al equipo por este problema frente a los demás, según los criterios de la Sesión 1.
+> Este problema fue seleccionado porque afecta simultáneamente la capacidad de los tenderos para retener clientes, aumentar la frecuencia de compra y competir con grandes cadenas, aplicaciones de domicilios y plataformas digitales. Un programa individual puede beneficiar a un solo comercio, pero su utilidad disminuye cuando el cliente debe acumular puntos en diferentes sistemas, descargar múltiples aplicaciones o esperar demasiado tiempo para redimirlos. 
 
-Escriban aquí su respuesta.
+La oportunidad es construir una red común en la que varios tenderos puedan emitir y aceptar puntos bajo reglas compartidas. Así, el cliente podría acumular valor en una tienda y utilizarlo en otra participante, aumentando la utilidad percibida del programa. 
+
+La solución no busca crear una moneda especulativa. Los puntos tendrían una función promocional y de fidelización, con reglas claras de emisión, transferencia, redención, vencimiento y límites. La participación de varios comercios independientes crea una necesidad de coordinación: todos deben confiar en que los puntos son legítimos, que no se emiten de manera arbitraria y que las redenciones se registran correctamente. 
 
 ### Propuestas descartadas
 
-> Cada propuesta considerada, quién la propuso y el motivo del descarte.
+Recíclame: Falta de incentivos y trazabilidad para fomentar el reciclaje. 
 
-Escriban aquí su respuesta.
+PropChain: Uso transparente de los recursos en propiedad horizontal. 
 
 ### Cómo tomamos la decisión
 
-> Cómo llegó el equipo al acuerdo: votación, consenso tras debate u otro.
-
-Escriban aquí su respuesta.
+Se llego a la toma de decisión después de recibir acompañamiento y revisión de los pro y contra de las demás propuestas, vemos posibilidades de llegar a los pequeños comerciantes con una idea de fidelización a través de la tokenización sin que tengan altos costos.
 
 ---
 
@@ -32,54 +30,140 @@ Escriban aquí su respuesta.
 
 ### Encabezado
 
-> Nombre del proyecto y una frase que describa el problema. Extensión: breve.
-
-Escriban aquí su respuesta.
+> Red de Fidelización y Puntos Inter-Comercio Tokenizados, Sistema interoperable de puntos digitales que permite a los clientes acumular y redimir beneficios en diferentes tenderos y comercios locales aliados
 
 ### Equipo y roles
 
-> Integrantes con su usuario de GitHub, rol asumido por cada persona, responsable de las entregas y canal de coordinación interna. Extensión: breve.
+> El proyecto requiere una combinación de estrategia comercial, diseño de procesos, tecnología, operación de la red y cumplimiento. La responsabilidad debe distribuirse para evitar que una sola persona controle la emisión, administración y redención de los puntos. 
 
-Escriban aquí su respuesta.
+95xErvit – Erik Villareal: Tecnología: Diseño, arquitectura tecnológica 
+
+EstebannEsteban – Esteban Ibarguen: Desarrollo, integraciones y seguridad tecnológica 
+
+Germanoch-ToraC - German Ochoa: Dirección, estratégica comercial y diseño de proceso. 
 
 ### Problema y evidencia
 
-> Enunciado del problema en una frase, sin mencionar blockchain. Contexto, frecuencia y alcance. Evidencia mínima de que el problema existe: observación directa, experiencia propia, conversaciones o fuentes consultadas, con enlace o cita cuando aplique. Extensión: 150–300 palabras.
+> Los tenderos compiten en un entorno donde la relación personal con el cliente es una de sus principales ventajas. Sin embargo, esa relación suele depender de la memoria del comerciante, descuentos informales o promociones ocasionales. Muchos establecimientos no cuentan con una herramienta sencilla para identificar clientes frecuentes, recompensar su comportamiento o promover nuevas compras. 
 
-Escriban aquí su respuesta.
+Los programas de fidelización tradicionales presentan tres dificultades principales. Primero, los puntos emitidos por cada comercio solo pueden utilizarse en ese establecimiento, por lo que el cliente percibe poco valor si compra allí con poca frecuencia. Segundo, los comercios pequeños no siempre pueden pagar el desarrollo, mantenimiento y soporte de una aplicación propia. Tercero, cuando existen varios programas independientes, el cliente debe recordar diferentes saldos, códigos, aplicaciones y condiciones. 
 
 ### Usuario y actores
 
-> Quién sufre el problema y qué necesita resolver. Cómo lo resuelve hoy y qué le cuesta en dinero, tiempo o esfuerzo. Demás actores que intervienen en el flujo, con el papel que cumple cada uno. Extensión: 150–300 palabras.
-
-Escriban aquí su respuesta.
+> Tendero local Cliente de barrio comercios complementarios Administrador de la red Proveedores tecnológicos Entidades de protección al consumidor y datos.
 
 ### Flujo actual de valor
 
-> Recorrido paso a paso de cómo se mueve hoy el dinero, la información o el activo, desde el origen hasta el destino. Diagrama o secuencia numerada, con los intermediarios explícitos. Señalar si algún paso responde a una obligación normativa. Extensión: 150–300 palabras.
+> El cliente compra en un tendero. 
 
-Escriban aquí su respuesta.
+El tendero decide informalmente si entrega un descuento o recompensa. 
+
+Si existe una tarjeta física, marca un sello o registra manualmente la compra. 
+
+El cliente conserva la tarjeta o espera una nueva promoción. 
+
+La recompensa solo puede utilizarse en el mismo comercio. 
+
+El tendero asume individualmente el costo del beneficio. 
+
+No existe un registro común con otros comercios. 
+
+El cliente debe repetir el proceso en cada establecimiento. 
+
+El tendero no conoce con precisión el costo de la campaña ni su retorno. 
+
+Si la tarjeta se pierde o el negocio cierra, el cliente puede perder el beneficio. 
 
 ### Fricciones identificadas
 
-> Puntos concretos donde el flujo falla, se encarece o se demora. Cada fricción indica en qué paso ocurre, qué la causa y a quién afecta. Extensión: 150–300 palabras.
+> El cliente compra en un tendero. 
 
-Escriban aquí su respuesta.
+El tendero decide informalmente si entrega un descuento o recompensa. 
+
+Si existe una tarjeta física, marca un sello o registra manualmente la compra. 
+
+El cliente conserva la tarjeta o espera una nueva promoción. 
+
+La recompensa solo puede utilizarse en el mismo comercio. 
+
+El tendero asume individualmente el costo del beneficio. 
+
+No existe un registro común con otros comercios. 
+
+El cliente debe repetir el proceso en cada establecimiento. 
+
+El tendero no conoce con precisión el costo de la campaña ni su retorno. 
+
+Si la tarjeta se pierde o el negocio cierra, el cliente puede perder el beneficio. 
 
 ### Oportunidad e hipótesis
 
-> Oportunidad priorizada entre las fricciones identificadas, con el motivo de la elección. Hipótesis inicial de por qué blockchain podría mejorar ese punto, expresada en términos de qué cambiaría para el usuario. Extensión: 150–300 palabras.
+> Crear una red de puntos digitales interoperables para que los tenderos puedan premiar compras y los clientes puedan utilizar sus beneficios en distintos comercios aliados. 
 
-Escriban aquí su respuesta.
+La red puede iniciar con reglas sencillas: 
+
+Un punto por cada valor mínimo de compra. 
+
+Bonificaciones durante campañas específicas. 
+
+Redención por descuentos o productos definidos. 
+
+Límites por cliente y comercio. 
+
+Vencimiento informado. 
+
+Prohibición de venta especulativa de puntos. 
+
+No conversión directa a dinero, salvo que exista una estructura legal y financiera expresamente diseñada. 
+
+La oportunidad comercial consiste en transformar la fidelización de una acción individual en un mecanismo de cooperación local. Los comercios pueden compartir clientes sin perder completamente su identidad. El cliente obtiene más opciones y los negocios pueden crear campañas conjuntas. 
+
+Hipótesis principal 
+
+Si los tenderos pueden emitir puntos mediante una herramienta sencilla y sus clientes pueden utilizarlos en varios comercios locales, entonces aumentará la participación en el programa, la frecuencia de compra y la retención de clientes, siempre que el costo de operación sea inferior al valor comercial generado. 
 
 ### Criterio de pertinencia
 
-> Justificación de por qué el caso requiere un registro distribuido y no una base de datos tradicional o una integración entre sistemas existentes. Debe apoyarse en al menos uno de los criterios de la Sesión 1: varias partes que no confían entre sí necesitan compartir un mismo registro, el histórico no puede alterarse, o se elimina un intermediario que hoy concentra la confianza. Extensión: 150–300 palabras.
+> Criterio 1: varias partes necesitan un registro común 
 
-Escriban aquí su respuesta.
+Cumple parcialmente y puede cumplir de forma sólida cuando la red crece. 
+
+Los comercios emisores, comercios receptores, clientes y administrador necesitan conocer el saldo y el historial de los puntos. También requieren una forma común de calcular las obligaciones derivadas de las redenciones. 
+
+Una base de datos centralizada podría resolver el problema durante un piloto pequeño. La pertinencia de blockchain aumenta cuando participan muchos comercios independientes, con sistemas diferentes y sin una relación de confianza completa entre ellos. 
+
+Criterio 2: el histórico no puede alterarse 
+
+Cumple parcialmente. 
+
+La trazabilidad de los puntos puede ser útil para comprobar cuándo se emitieron, transfirieron, redimieron, vencieron o cancelaron. Un historial verificable reduce disputas y evita que una parte modifique silenciosamente los saldos. 
+
+Sin embargo, la inmutabilidad no prueba que la compra original haya ocurrido. Si un empleado registra una venta falsa, el sistema conservará el registro, pero no podrá validar por sí solo la realidad comercial. Se requieren controles operativos, auditorías y límites de emisión. 
+
+Criterio 3: existe un intermediario cuya función es concentrar la confianza 
+
+Cumple de forma limitada. 
+
+La red puede reducir la dependencia de un único operador para validar saldos y movimientos. No obstante, seguirá siendo necesario un administrador para aprobar comercios, definir reglas, gestionar campañas, atender reclamos y coordinar liquidaciones.
 
 ### Supuestos y riesgos
 
-> Dos o tres supuestos que tendrían que ser ciertos para que la hipótesis funcione, y qué podría invalidarla. Extensión: 150–300 palabras.
+> Los clientes valoran recompensas utilizables en diferentes comercios. 
 
-Escriban aquí su respuesta.
+Los tenderos están dispuestos a financiar o cofinanciar campañas. 
+
+Los comercios aceptan reglas comunes de emisión y redención. 
+
+La administración de la red puede operar con costos sostenibles. 
+
+Los clientes utilizan teléfonos o mecanismos alternativos de identificación. 
+
+Los puntos tienen una finalidad promocional clara y no especulativa. 
+
+Los comercios pueden verificar las redenciones sin procesos complejos. 
+
+Las reglas de vencimiento y cancelación son comprendidas por los usuarios. 
+
+La plataforma puede proteger los datos personales. 
+
+El marco jurídico colombiano permite estructurar el programa bajo la modalidad elegida. 
