@@ -30,11 +30,11 @@
 
 | Prioridad | Historia | Propuesta por | Por qué entra al backlog |
 | :---: | --- | :---: | --- |
-| 1 | Como tendero de un comercio participante, quiero registrar una compra y asignar los puntos correspondientes según las reglas de la campaña, para recompensar a mis clientes sin llevar controles manuales. | Esteban Ibarguen | Escriban aquí su respuesta. |
-| 2 | Como cliente de la red, quiero utilizar mis puntos en un comercio aliado diferente de aquel donde los obtuve, para acceder a recompensas útiles en mis compras cotidianas. | Esteban Ibarguen | Escriban aquí su respuesta. |
-| 3 | Como administrador de la red quiero establecer reglas comunes para la emisión, transferencia, redención y vencimiento de puntos para garantizar un funcionamiento justo y controlado entre los comercios participantes. | German Ochoa | Escriban aquí su respuesta. |
-| 4 | Como cliente quiero consultar mi saldo e historial de puntos para conocer cuánto valor tengo disponible y cómo lo he utilizado.  | Erik Villarreal | Escriban aquí su respuesta. |
-| 5 | Como tendero local, quiero consultar cuántos beneficios he entregado, cuántos han sido utilizados y qué clientes han regresado, para saber si mis campañas generan más compras y tomar mejores decisiones comerciales. | German Ochoa | Escriban aquí su respuesta. |
+| 1 | Como tendero de un comercio participante, quiero registrar una compra y asignar los puntos correspondientes según las reglas de la campaña, para recompensar a mis clientes sin llevar controles manuales. | Esteban Ibarguen | 	Imprescindible: es el origen de todo el valor. |
+| 2 | Como cliente de la red, quiero utilizar mis puntos en un comercio aliado diferente de aquel donde los obtuve, para acceder a recompensas útiles en mis compras cotidianas. | Esteban Ibarguen | Imprescindible: es el diferencial frente a los programas aislados.. |
+| 3 | Como administrador de la red quiero establecer reglas comunes para la emisión, transferencia, redención y vencimiento de puntos para garantizar un funcionamiento justo y controlado entre los comercios participantes. | German Ochoa | Debería: mitiga el riesgo de ventas falsas. |
+| 4 | Como cliente quiero consultar mi saldo e historial de puntos para conocer cuánto valor tengo disponible y cómo lo he utilizado.  | Erik Villarreal | Imprescindible: sin saldo visible el cliente no percibe valor. |
+| 5 | Como tendero local, quiero consultar cuántos beneficios he entregado, cuántos han sido utilizados y qué clientes han regresado, para saber si mis campañas generan más compras y tomar mejores decisiones comerciales. | German Ochoa | Debería: responde a la fricción de no conocer el costo. |
 
 *(Agreguen o borren filas según las historias que pasen al backlog.)*
 
@@ -133,7 +133,7 @@ De esta manera, el MVP permite validar primero la hipótesis central: una red co
 
 > Lienzo de una página con el modelo del producto. Extensión: enlace (obligatorio).
 
-**Enlace al Lean Canvas (obligatorio):** [Lean Canvas del proyecto](https://escriban-aqui-el-enlace)
+**Enlace al Lean Canvas (obligatorio):** [Lean Canvas del proyecto]([https://escriban-aqui-el-enlace](https://www.canva.com/d/6l0715zO5l9WBcz))
 
 El lienzo debe cubrir: problema, segmento de usuarios, propuesta de valor única, solución, canales, métricas clave, ventaja diferencial y estructura de costos e ingresos.
 
@@ -153,13 +153,24 @@ El lienzo debe cubrir: problema, segmento de usuarios, propuesta de valor única
 
 **Diagrama (imagen o enlace):** Escriban aquí el enlace o inserten la imagen.
 
+```mermaid
+flowchart LR
+    C[Cliente<br/>app web: QR y saldo] --> B
+    T[Tendero<br/>app web: emitir y redimir] --> B
+    A[Administrador<br/>panel: comercios y límites] --> B
+    B[Servicio de la red<br/>reglas, límites y firma] --> D[(Base de datos<br/>perfiles y comercios)]
+    B -->|envía transacciones| S[Stellar testnet<br/>activo de puntos, cuentas, pagos]
+    C -.->|lee saldo e historial| S
+    T -.->|lee movimientos| S
+```
+ 
 | Capa | Componente | Qué hace |
 | :---: | --- | --- |
-| Interfaz | Escriban aquí su respuesta. | Escriban aquí su respuesta. |
-| Lógica | Escriban aquí su respuesta. | Escriban aquí su respuesta. |
-| Stellar | Escriban aquí su respuesta. | Escriban aquí su respuesta. |
-
-**En qué punto entra la red:** Escriban aquí su respuesta.
+| Interfaz | Aplicación web para cliente, tendero y administrador. | Muestra el código QR, el saldo, los formularios de entrega y redención y los reportes. |
+| Lógica | Servicio de la red y base de datos. | Aplica las reglas (puntos por compra, límite por comercio), relaciona el celular del cliente con su cuenta, arma y firma las transacciones. Guarda fuera de la red los datos personales. |
+| Stellar | Activo de puntos, cuentas de emisión, comercios y clientes. | Registra cada entrega y cada redención como un pago y conserva los saldos y el historial. |
+ 
+**En qué punto entra la red:** La red entra en dos momentos: cuando el tendero confirma la entrega de puntos y cuando el cliente confirma una redención. En ambos casos el servicio valida la regla, envía la transacción y solo muestra el resultado cuando la red la confirma. Los saldos y el historial se leen directamente de Stellar, de modo que la base de datos propia no es la fuente de verdad de los puntos: solo guarda perfiles, comercios y configuración. Los datos personales nunca se escriben en la red.
 
 ---
 
@@ -171,5 +182,12 @@ El lienzo debe cubrir: problema, segmento de usuarios, propuesta de valor única
 
 | Componente de Stellar | Para qué lo usamos | Por qué ese y no otra alternativa |
 | --- | --- | --- |
-| Escriban aquí su respuesta. | Escriban aquí su respuesta. | Escriban aquí su respuesta. |
-| Escriban aquí su respuesta. | Escriban aquí su respuesta. | Escriban aquí su respuesta. |
+| Activo emitido (cuenta emisora y cuenta distribuidora) | Representar el punto de fidelización. | Crear un activo es una función nativa: no exige programar ni auditar un contrato para el MVP. |
+| Líneas de confianza con autorización requerida | Permitir que solo comercios y clientes aprobados tengan puntos. | Lleva a la red la aprobación del administrador; evita un mercado abierto y especulativo de puntos. |
+| Pagos con memo | Registrar entregas y redenciones con su referencia. | Cada movimiento queda con fecha, origen y destino, verificable por cualquier comercio. |
+| Reservas patrocinadas | Crear cuentas de clientes sin que ellos compren lumens. | El cliente de barrio no debe adquirir criptoactivos para recibir un punto. |
+| API de consulta (Horizon) | Leer saldos e historial para los reportes. | Los comercios comprueban los datos sin depender de la base del operador. |
+| Red de pruebas | Operar el piloto sin costo. | Permite validar la hipótesis antes de asumir compromisos reales. |
+ 
+Las comisiones bajas y la confirmación en segundos hacen viable registrar compras pequeñas. Recuperación de puntos vencidos (clawback) y contratos en Soroban para reglas de campaña quedan como evolución posterior. Persisten límites ya señalados: la red no prueba que la compra ocurrió y el administrador sigue siendo necesario.
+ 
