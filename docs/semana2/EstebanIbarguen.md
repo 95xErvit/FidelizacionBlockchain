@@ -1,4 +1,4 @@
-# Historias de usuario individuales
+# Historias de usuario
 
 **Nombre:** Esteban Ibarguen
 **Usuario de GitHub:** EstebannEsteban
@@ -61,21 +61,3 @@ necesidad del tendero de recompensar a sus clientes de manera sencilla.
 Si registrar una compra y otorgar puntos resulta lento o confuso,
 el comercio tendrá pocos incentivos para utilizar la solución.
 
-En segundo lugar priorizo la redención en otro comercio, porque
-representa la diferencia principal frente a un programa de puntos
-aislado. Ambas historias deben validarse juntas: emitir puntos sin
-lograr que puedan utilizarse en otro establecimiento no demuestra
-el valor de la red.
-
-Después priorizo la validación de redenciones y la consulta de saldo,
-porque permiten utilizar los beneficios con confianza y claridad.
-La identificación compartida evita registros repetidos y facilita
-la participación en varios comercios.
-
-Finalmente, incluyo el control de permisos y el historial para
-sostener una operación verificable entre participantes independientes.
-Su posición en esta lista no significa que sean opcionales:
-son controles necesarios para el piloto.
-
-Este orden expresa importancia para el usuario y para validar la
-propuesta; no es necesariamente el orden técnico de implementación.
