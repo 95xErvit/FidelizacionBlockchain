@@ -1,9 +1,9 @@
 
 # Product Blueprint
 
-**Nombre del proyecto:** Escriban aquí el nombre
+**Nombre del proyecto:** Fidelización Blockchain
 
-**Repositorio (enlace obligatorio):** [Nombre del repositorio](https://github.com/usuario/repositorio)
+**Repositorio (enlace obligatorio):** [FidelizacionBlockchain](https://github.com/95xErvit/FidelizacionBlockchain)
 
 > Los campos marcados como *enlace obligatorio* deben ir como enlace en Markdown, con este formato: `[texto del enlace](https://...)`. Reemplacen el texto y la dirección de ejemplo.
 
