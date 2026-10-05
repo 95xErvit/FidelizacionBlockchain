@@ -133,7 +133,7 @@ De esta manera, el MVP permite validar primero la hipótesis central: una red co
 
 > Lienzo de una página con el modelo del producto. Extensión: enlace (obligatorio).
 
-**Enlace al Lean Canvas (obligatorio):** [Lean Canvas del proyecto](https://www.canva.com/d/coTZfSGN3ZU4Qzg)
+**Enlace al Lean Canvas (obligatorio):** [Lean Canvas del proyecto](https://canva.link/2y8xafibh3sjuug)
 
 El lienzo debe cubrir: problema, segmento de usuarios, propuesta de valor única, solución, canales, métricas clave, ventaja diferencial y estructura de costos e ingresos.
 
