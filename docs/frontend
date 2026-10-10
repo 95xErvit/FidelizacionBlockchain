@@ -1,1 +1,106 @@
+# Información para el Frontend (MVP)
 
+Este documento define **qué información colocar en el frontend** para la prueba funcional del Entregable 3.
+
+> Alcance: flujo principal del Blueprint con **datos de prueba** (testnet + datos ficticios).  
+> Esta semana no se implementa contrato; solo se muestra el flujo funcional.
+
+---
+
+## 1) Pantalla de acceso / elección de rol
+
+- Título sugerido: **Red de Fidelización — Barrio La Esperanza**
+- Botones:
+  - **Soy Tendero**
+  - **Soy Cliente**
+  - **Soy Administrador**
+
+---
+
+## 2) Tendero — Registro de comercio
+
+Campos sugeridos (con ejemplo ficticio):
+
+- **Nombre del comercio:** Panadería La Esquina
+- **Nombre del tendero:** Don Carlos Restrepo
+- **Tipo de comercio:** Panadería
+- **Dirección / barrio:** Cra 5 #12-34, La Esperanza
+- **Teléfono / NIT:** NIT 900.123.456-7
+
+---
+
+## 3) Tendero — Registrar compra (pantalla principal)
+
+Campos y comportamiento:
+
+- **Cliente (teléfono o QR):** 3105551234 (Ana María Rodríguez)
+- **Valor de compra:** 25.000 COP
+- **Campaña activa:** Semana de Pan (1 punto por cada 1.000 COP)
+- **Puntos asignados (automático):** 25
+- Botón: **Entregar puntos**
+- Confirmación esperada: **"✓ 25 puntos entregados a Ana María"**
+
+---
+
+## 4) Cliente — Consulta de saldo e historial
+
+Información visible:
+
+- **Identificación cliente:** 3105551234
+- **Saldo disponible:** 85 puntos
+- **Próximo vencimiento:** 15 de noviembre
+- **Historial de movimientos** (ejemplo):
+  - 10/10 — Emisión — Panadería La Esquina — **+25**
+  - 09/10 — Redención — Droguería Salud Plus — **-30**
+- Botón: **Redimir en otro comercio**
+
+---
+
+## 5) Redención en comercio aliado
+
+Campos y resultado:
+
+- **Comercio receptor:** Droguería Salud Plus
+- **Puntos a usar:** 30 puntos
+- **Equivalencia:** 30 puntos = 3.000 COP de descuento
+- Verificación: **"Saldo suficiente ✓"**
+- Confirmación: **"Redención aplicada. Nuevo saldo: 55 puntos"**
+
+---
+
+## 6) Tendero — Panel de resultados
+
+Indicadores mínimos:
+
+- **Beneficios entregados:** 145 puntos (periodo)
+- **Beneficios utilizados:** 60 puntos (41%)
+- **Clientes recurrentes:** 23 (2+ compras)
+- **Campaña con mejor resultado:** Semana de Pan
+
+---
+
+## 7) Administrador — Reglas de campaña
+
+Configuraciones mínimas:
+
+- **Equivalencia:** 1 punto por cada 1.000 COP
+- **Límite por cliente:** máx. 100 puntos/día
+- **Límite por comercio:** máx. 500 puntos/semana
+- **Vencimiento:** 30 días desde emisión
+- **Comercios habilitados:** Activo / Pendiente / Retirado
+
+---
+
+## Reglas de calidad de la información
+
+1. **Usar solo datos ficticios** (no datos personales reales).
+2. **No mostrar lenguaje técnico blockchain** al usuario final (tendero/cliente).
+3. **Mantener el flujo completo** del MVP: registro → compra → puntos → saldo → redención → saldo actualizado.
+4. Mientras no exista contrato Soroban, simular estados con datos locales o backend de prueba.
+5. Operar únicamente sobre **Stellar testnet** en esta fase.
+
+---
+
+## Flujo mínimo que debe verse funcionando
+
+**Registrar comercio → Registrar cliente → Registrar compra → Asignar puntos → Consultar saldo → Redimir en aliado → Actualizar saldo → Ver historial.**
