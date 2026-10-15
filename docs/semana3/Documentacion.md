@@ -1,6 +1,6 @@
 # Documentación Semana 3 — Red de Fidelización Blockchain
 
-## 1. Front construido
+## 1. FRONT CONSTRUIDO
 
 ### Pantallas o vistas implementadas
 
@@ -23,7 +23,7 @@ La lectura de saldos y del historial se hace en tiempo real desde la red de prue
 
 **Capturas de pantalla:** [PENDIENTE — insertar capturas o el enlace del front desplegado (Vercel) aquí]
 
-## 2. Decisión técnica
+## 2. DECISIÓN TÉCNICA
 
 **Opción elegida: A — Contrato propio en Soroban.**
 
@@ -35,7 +35,7 @@ Se descartó la Opción B (usar solo herramientas existentes del ecosistema: act
 
 Esta semana no se escribe ni se despliega código de contrato; la decisión queda registrada y la implementación se entrega la semana 4 en testnet.
 
-## 3. Participación del equipo
+## 3. PARTICIPACIÓN DEL EQUIPO
 
 | Integrante | Usuario GitHub | Aporte en el entregable |
 |---|---|---|
@@ -45,6 +45,6 @@ Esta semana no se escribe ni se despliega código de contrato; la decisión qued
 
 ## 4. Bloqueos y siguiente paso
 
-**Bloqueos actuales:** [PENDIENTE — describir incidencias encontradas durante la construcción del front]
+**Bloqueos actuales:** No se presentaron.
 
 **Siguiente paso:** implementar y desplegar en testnet el contrato Soroban (`emitir_puntos`, `definir_reglas`, `redimir`, `vencer_puntos`) y conectarlo al front ya construido.
