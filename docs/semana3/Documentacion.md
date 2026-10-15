@@ -45,6 +45,6 @@ Esta semana no se escribe ni se despliega código de contrato; la decisión qued
 
 ## 4. Bloqueos y siguiente paso
 
-**Bloqueos actuales:** No se presentaron.
+**Bloqueos actuales:** No se presento ningún bloqueo en la construcción.
 
 **Siguiente paso:** implementar y desplegar en testnet el contrato Soroban (`emitir_puntos`, `definir_reglas`, `redimir`, `vencer_puntos`) y conectarlo al front ya construido.
