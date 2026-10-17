@@ -1,31 +1,37 @@
-// Lo que se muestra cuando "la red confirma" una entrega o redención.
-// Enseña qué quedará registrado en Stellar: memo, hash y quién envía a quién.
+// Lo que se muestra cuando la red CONFIRMA una entrega o redención.
+// Todo lo de aquí es real: la función del contrato, el hash y el enlace al explorador.
+import { enlaceTx } from '../config/stellar.js'
 import { fechaCorta } from '../data/store.jsx'
 
-export default function Comprobante({ movimiento, cliente, comercio, onNuevo }) {
-  const esEntrega = movimiento.tipo === 'entrega'
+export default function Comprobante({ tipo, puntos, hash, saldoFinal, cliente, comercio, onNuevo, avisoHistorial }) {
+  const esEntrega = tipo === 'entrega'
   return (
     <div className={`comprobante ${esEntrega ? 'es-entrega' : 'es-redencion'}`} role="status">
       <p className="comprobante-titulo">
-        {esEntrega ? `Entregaste ${movimiento.puntos} puntos` : `Se redimieron ${movimiento.puntos} puntos`}
+        {esEntrega ? `Entregaste ${puntos} puntos` : `Se redimieron ${puntos} puntos`}
       </p>
       <p className="comprobante-sub">
-        {esEntrega ? `a ${cliente.nombre}` : `de ${cliente.nombre}`} en {comercio.nombre} · {fechaCorta(movimiento.fecha)}
+        {esEntrega ? `a ${cliente.nombre}` : `de ${cliente.nombre}`} en {comercio.nombre} · {fechaCorta(new Date().toISOString())}
       </p>
       <dl className="registro">
         <div>
-          <dt>Operación en Stellar</dt>
-          <dd>Pago del activo PUNTOS {esEntrega ? 'tienda → cliente' : 'cliente → tienda'}</dd>
+          <dt>Operación en el contrato</dt>
+          <dd className="codigo">{esEntrega ? 'emitir_puntos' : 'redimir'}</dd>
         </div>
+        {saldoFinal != null && (
+          <div>
+            <dt>Saldo del cliente en la red</dt>
+            <dd>{saldoFinal} puntos</dd>
+          </div>
+        )}
         <div>
-          <dt>Memo</dt>
-          <dd className="codigo">{movimiento.memo}</dd>
-        </div>
-        <div>
-          <dt>Hash (simulado)</dt>
-          <dd className="codigo hash">{movimiento.hash}</dd>
+          <dt>Hash de la transacción</dt>
+          <dd className="codigo hash">
+            <a href={enlaceTx(hash)} target="_blank" rel="noreferrer">{hash}</a>
+          </dd>
         </div>
       </dl>
+      {avisoHistorial && <p className="aviso">{avisoHistorial}</p>}
       <button type="button" className="boton boton-secundario" onClick={onNuevo}>
         {esEntrega ? 'Atender otro cliente' : 'Hacer otra redención'}
       </button>

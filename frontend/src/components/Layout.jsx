@@ -1,5 +1,7 @@
-// Marco común: barra superior con el rol y las pestañas de cada rol.
+// Marco común: barra superior con el rol, la wallet conectada y las pestañas de cada rol.
 import { Link, NavLink } from 'react-router-dom'
+import { cortar, enlaceContrato, enlaceCuenta, stellarConfig } from '../config/stellar.js'
+import { useStore } from '../data/store.jsx'
 
 const MENUS = {
   cliente: [
@@ -21,7 +23,9 @@ const MENUS = {
 const NOMBRE_ROL = { cliente: 'Cliente', tendero: 'Tienda', admin: 'Administración' }
 
 export default function Layout({ rol, subtitulo, ancho = 'angosto', sinMenu = false, children }) {
+  const { wallet, desconectar } = useStore()
   const menu = MENUS[rol] || []
+  const usaWallet = rol === 'tendero' || rol === 'admin'
   return (
     <div className={`marco marco-${rol}`}>
       <header className="barra">
@@ -35,6 +39,16 @@ export default function Layout({ rol, subtitulo, ancho = 'angosto', sinMenu = fa
             {subtitulo ? <strong> {subtitulo}</strong> : null}
           </span>
         )}
+        {usaWallet && wallet && (
+          <span className="barra-wallet">
+            <a href={enlaceCuenta(wallet)} target="_blank" rel="noreferrer" className="codigo" title={wallet}>
+              {cortar(wallet)}
+            </a>
+            <button type="button" className="enlace-discreto" onClick={desconectar}>
+              Salir
+            </button>
+          </span>
+        )}
       </header>
       {!sinMenu && menu.length > 0 && (
         <nav className="pestanas" aria-label={`Menú de ${NOMBRE_ROL[rol]}`}>
@@ -46,7 +60,16 @@ export default function Layout({ rol, subtitulo, ancho = 'angosto', sinMenu = fa
         </nav>
       )}
       <main className={`contenido contenido-${ancho}`}>{children}</main>
-      <footer className="pie">Red de pruebas de Stellar (testnet) · datos simulados esta semana</footer>
+      <footer className="pie">
+        Red de pruebas de Stellar ({stellarConfig.red}) ·{' '}
+        {stellarConfig.contractId ? (
+          <a href={enlaceContrato()} target="_blank" rel="noreferrer">
+            contrato {cortar(stellarConfig.contractId)}
+          </a>
+        ) : (
+          'falta configurar VITE_CONTRACT_ID'
+        )}
+      </footer>
     </div>
   )
 }

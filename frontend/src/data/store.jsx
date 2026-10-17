@@ -1,225 +1,101 @@
-// "Cerebro" del front: guarda comercios, clientes y movimientos en memoria
-// (y en el navegador para que no se pierdan al recargar).
-// Cada acción que escribe en la red (entregar y redimir) está marcada con
-// "STELLAR (semana 4)": ahí es donde irá la transacción real.
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
-import {
-  REGLAS,
-  clientesIniciales,
-  comerciosIniciales,
-  movimientosIniciales,
-} from './mockData.js'
+// "Cerebro" del front. Ya no hay datos simulados:
+// - comercios, clientes e historial vienen de la API (/api → Supabase)
+// - saldos, reglas y límites vienen del contrato en testnet
+// - la sesión del tendero/admin es su wallet; la del cliente, su celular
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { api } from '../lib/api.js'
+import { leerAdmin, leerReglas } from '../lib/contrato.js'
+import { conectarWallet, desconectarWallet, restaurarWallet } from '../lib/wallet.js'
 
-const CLAVE = 'puntos-barrio-v1'
+const CLAVE_CLIENTE = 'puntos-barrio-cliente-v2'
 const StoreContext = createContext(null)
 
-function estadoInicial() {
-  return {
-    comercios: comerciosIniciales,
-    clientes: clientesIniciales,
-    movimientos: movimientosIniciales,
-    clienteActivoId: null, // quién usa la app de cliente
-    comercioActivoId: null, // qué tienda usa la app de tendero
-  }
-}
-
-function cargar() {
+function leerClienteGuardado() {
   try {
-    const guardado = localStorage.getItem(CLAVE)
-    if (guardado) return JSON.parse(guardado)
+    return JSON.parse(localStorage.getItem(CLAVE_CLIENTE)) || null
   } catch {
-    /* sin almacenamiento: seguimos con los datos de prueba */
+    return null
   }
-  return estadoInicial()
-}
-
-// Simula el hash que devuelve Stellar cuando confirma una transacción.
-function hashFalso() {
-  const hex = '0123456789abcdef'
-  let h = ''
-  for (let i = 0; i < 64; i++) h += hex[Math.floor(Math.random() * 16)]
-  return h
-}
-
-function cuentaFalsa(prefijo) {
-  const abc = 'ABCDEFGHJKLMNPQRSTUVWXYZ234567'
-  let fin = ''
-  for (let i = 0; i < 4; i++) fin += abc[Math.floor(Math.random() * abc.length)]
-  return `G${prefijo.slice(0, 3).toUpperCase()}…${fin}`
-}
-
-function siglas(nombre) {
-  return nombre
-    .split(' ')
-    .filter((p) => p.length > 2)
-    .map((p) => p[0])
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
 }
 
 export function StoreProvider({ children }) {
-  const [estado, setEstado] = useState(cargar)
+  const [cliente, setCliente] = useState(leerClienteGuardado)
+  const [wallet, setWallet] = useState(null)
+  const [comercios, setComercios] = useState([])
+  const [cargandoComercios, setCargandoComercios] = useState(true)
+  const [errorRed, setErrorRed] = useState('')
+  const [reglas, setReglas] = useState({ pesosPorPunto: 1000, diasVencimiento: 180 })
+  const [admin, setAdmin] = useState(null)
+
+  const recargarComercios = useCallback(async () => {
+    try {
+      const { comercios } = await api.comercios()
+      setComercios(comercios)
+      setErrorRed('')
+    } catch (e) {
+      setErrorRed(`No pudimos cargar los comercios: ${e.message}`)
+    } finally {
+      setCargandoComercios(false)
+    }
+  }, [])
+
+  // Al abrir la app: comercios (API), reglas y admin (contrato) y la wallet guardada.
+  useEffect(() => {
+    recargarComercios()
+    leerReglas()
+      .then((r) => r && setReglas({ pesosPorPunto: r.pesos_por_punto, diasVencimiento: r.dias_vencimiento }))
+      .catch(() => {})
+    leerAdmin().then(setAdmin).catch(() => {})
+    restaurarWallet().then((g) => g && setWallet(g))
+  }, [recargarComercios])
 
   useEffect(() => {
     try {
-      localStorage.setItem(CLAVE, JSON.stringify(estado))
+      if (cliente) localStorage.setItem(CLAVE_CLIENTE, JSON.stringify(cliente))
+      else localStorage.removeItem(CLAVE_CLIENTE)
     } catch {
-      /* ignorar */
+      /* sin almacenamiento: la sesión dura lo que dure la pestaña */
     }
-  }, [estado])
+  }, [cliente])
 
-  const api = useMemo(() => {
-    const { comercios, clientes, movimientos } = estado
+  const conectar = useCallback(async () => {
+    const g = await conectarWallet()
+    setWallet(g)
+    return g
+  }, [])
 
-    const saldoDe = (clienteId) =>
-      movimientos
-        .filter((m) => m.clienteId === clienteId)
-        .reduce((s, m) => s + (m.tipo === 'entrega' ? m.puntos : -m.puntos), 0)
-
-    const emitidosEsteMes = (comercioId) => {
-      const ahora = new Date()
-      return movimientos
-        .filter((m) => {
-          const f = new Date(m.fecha)
-          return (
-            m.comercioId === comercioId &&
-            m.tipo === 'entrega' &&
-            f.getMonth() === ahora.getMonth() &&
-            f.getFullYear() === ahora.getFullYear()
-          )
-        })
-        .reduce((s, m) => s + m.puntos, 0)
+  const desconectar = useCallback(async () => {
+    try {
+      await desconectarWallet()
+    } finally {
+      setWallet(null)
     }
+  }, [])
 
-    const buscarCliente = (texto) => {
-      const t = texto.trim()
-      return clientes.find((c) => c.celular === t || c.id === t) || null
-    }
+  const valor = useMemo(
+    () => ({
+      // sesión cliente
+      cliente,
+      iniciarCliente: setCliente,
+      salirCliente: () => setCliente(null),
+      // wallet (tendero / admin)
+      wallet,
+      conectar,
+      desconectar,
+      esAdmin: Boolean(wallet && admin && wallet === admin),
+      admin,
+      // red
+      comercios,
+      cargandoComercios,
+      errorRed,
+      recargarComercios,
+      comercioDeWallet: wallet ? comercios.find((c) => c.cuenta === wallet) || null : null,
+      reglas,
+    }),
+    [cliente, wallet, conectar, desconectar, admin, comercios, cargandoComercios, errorRed, recargarComercios, reglas],
+  )
 
-    const nuevoMemo = (tipo, comercio) => {
-      const prefijo = tipo === 'entrega' ? 'ENT' : 'RED'
-      const n = movimientos.filter((m) => m.comercioId === comercio.id && m.tipo === tipo).length + 1
-      return `${prefijo}-${siglas(comercio.nombre)}-${String(n).padStart(4, '0')}`
-    }
-
-    return {
-      ...estado,
-      reglas: REGLAS,
-      saldoDe,
-      emitidosEsteMes,
-      buscarCliente,
-      comercioPorId: (id) => comercios.find((c) => c.id === id),
-      clientePorId: (id) => clientes.find((c) => c.id === id),
-
-      // Paso 3 del flujo: el cliente se registra con su celular.
-      // STELLAR (semana 4): crear cuenta con reserva patrocinada + trustline autorizada.
-      registrarCliente(nombre, celular) {
-        const existe = clientes.find((c) => c.celular === celular)
-        if (existe) {
-          setEstado((e) => ({ ...e, clienteActivoId: existe.id }))
-          return { ok: true, cliente: existe, yaExistia: true }
-        }
-        const cliente = { id: `c${Date.now()}`, nombre, celular, cuenta: cuentaFalsa(nombre) }
-        setEstado((e) => ({ ...e, clientes: [...e.clientes, cliente], clienteActivoId: cliente.id }))
-        return { ok: true, cliente, yaExistia: false }
-      },
-
-      salirCliente() {
-        setEstado((e) => ({ ...e, clienteActivoId: null }))
-      },
-
-      elegirComercio(id) {
-        setEstado((e) => ({ ...e, comercioActivoId: id }))
-      },
-
-      // Paso 5: el tendero entrega puntos por una compra.
-      // STELLAR (semana 4): pago del activo PUNTOS desde la distribuidora al cliente, con memo.
-      entregarPuntos(comercioId, clienteId, valorCompra) {
-        const comercio = comercios.find((c) => c.id === comercioId)
-        const puntos = Math.floor(valorCompra / REGLAS.pesosPorPunto)
-        if (puntos <= 0) {
-          return { ok: false, error: `La compra mínima para ganar un punto es $${REGLAS.pesosPorPunto.toLocaleString('es-CO')}.` }
-        }
-        const disponible = comercio.limiteMensual - emitidosEsteMes(comercioId)
-        if (puntos > disponible) {
-          return { ok: false, error: `Esta tienda solo puede entregar ${disponible} puntos más este mes. Pídele al administrador que suba el límite.` }
-        }
-        const mov = {
-          id: `t${Date.now()}`,
-          tipo: 'entrega',
-          clienteId,
-          comercioId,
-          puntos,
-          valorCompra,
-          memo: nuevoMemo('entrega', comercio),
-          hash: hashFalso(),
-          fecha: new Date().toISOString(),
-        }
-        setEstado((e) => ({ ...e, movimientos: [...e.movimientos, mov] }))
-        return { ok: true, movimiento: mov }
-      },
-
-      // Paso 8: el cliente redime puntos en otra tienda.
-      // STELLAR (semana 4): pago del activo PUNTOS del cliente a la tienda, con memo.
-      redimirPuntos(comercioId, clienteId, puntos) {
-        const comercio = comercios.find((c) => c.id === comercioId)
-        if (puntos <= 0) return { ok: false, error: 'Escribe cuántos puntos quiere usar el cliente.' }
-        const saldo = saldoDe(clienteId)
-        if (puntos > saldo) return { ok: false, error: `El cliente tiene ${saldo} puntos; no alcanza para redimir ${puntos}.` }
-        const mov = {
-          id: `t${Date.now()}`,
-          tipo: 'redencion',
-          clienteId,
-          comercioId,
-          puntos,
-          valorCompra: null,
-          memo: nuevoMemo('redencion', comercio),
-          hash: hashFalso(),
-          fecha: new Date().toISOString(),
-        }
-        setEstado((e) => ({ ...e, movimientos: [...e.movimientos, mov] }))
-        return { ok: true, movimiento: mov }
-      },
-
-      // Paso 1: el administrador aprueba un comercio.
-      // STELLAR (semana 4): crear la cuenta del comercio y autorizar su trustline.
-      aprobarComercio(id) {
-        setEstado((e) => ({
-          ...e,
-          comercios: e.comercios.map((c) =>
-            c.id === id ? { ...c, estado: 'aprobado', cuenta: c.cuenta || cuentaFalsa(c.nombre) } : c,
-          ),
-        }))
-      },
-
-      rechazarComercio(id) {
-        setEstado((e) => ({
-          ...e,
-          comercios: e.comercios.map((c) => (c.id === id ? { ...c, estado: 'rechazado' } : c)),
-        }))
-      },
-
-      solicitarComercio(datos) {
-        const nuevo = { id: `m${Date.now()}`, estado: 'pendiente', limiteMensual: 2000, cuenta: null, ...datos }
-        setEstado((e) => ({ ...e, comercios: [...e.comercios, nuevo] }))
-      },
-
-      // Paso 10: el administrador ajusta el límite de emisión (lo aplica el servidor, no un contrato).
-      cambiarLimite(id, limite) {
-        setEstado((e) => ({
-          ...e,
-          comercios: e.comercios.map((c) => (c.id === id ? { ...c, limiteMensual: limite } : c)),
-        }))
-      },
-
-      reiniciarDemo() {
-        setEstado(estadoInicial())
-      },
-    }
-  }, [estado])
-
-  return <StoreContext.Provider value={api}>{children}</StoreContext.Provider>
+  return <StoreContext.Provider value={valor}>{children}</StoreContext.Provider>
 }
 
 export function useStore() {
@@ -227,6 +103,6 @@ export function useStore() {
 }
 
 // Utilidades de formato compartidas
-export const pesos = (n) => `$${Number(n).toLocaleString('es-CO')}`
+export const pesos = (n) => `$${Number(n || 0).toLocaleString('es-CO')}`
 export const fechaCorta = (iso) =>
   new Date(iso).toLocaleString('es-CO', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
