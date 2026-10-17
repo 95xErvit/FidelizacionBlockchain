@@ -34,6 +34,7 @@ Front ──firma con wallet──▶ Contrato (testnet) ──hash──▶ Fro
 | `POST /api/comercios?accion=rechazar` | `{ id }` | `{ comercio }` rechazado |
 | `POST /api/movimientos` | `{ txHash }` de `emitir_puntos` / `redimir` | `{ movimiento, yaExistia }` |
 | `GET /api/movimientos?clienteId=` o `?comercioId=` | — | `{ movimientos: [...] }` (los 50 más recientes) |
+| `GET /api/resumen` | — | `{ clientes, emitidos, redimidos, enCirculacion, porComercio }` |
 
 Errores: `{ "error": "mensaje para el usuario" }` con código 400 (dato inválido), 404 (no existe), 409 (conflicto), 422 (la transacción no sirve) o 500.
 

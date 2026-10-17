@@ -165,5 +165,19 @@ export function crearServicios({ repo, verificarTx }) {
       const lista = await repo.listarMovimientos({ clienteId, comercioId })
       return { movimientos: lista.map(presentarMovimiento) }
     },
+
+    /** Totales de la red para el panel del administrador. */
+    async resumen() {
+      const [clientes, movimientos] = await Promise.all([repo.contarClientes(), repo.totalesMovimientos()])
+      const porComercio = {}
+      let emitidos = 0
+      let redimidos = 0
+      for (const m of movimientos) {
+        const c = (porComercio[m.comercio_id] ??= { entregados: 0, recibidos: 0 })
+        if (m.tipo === 'entrega') { emitidos += m.puntos; c.entregados += m.puntos }
+        else { redimidos += m.puntos; c.recibidos += m.puntos }
+      }
+      return { clientes, emitidos, redimidos, enCirculacion: emitidos - redimidos, porComercio }
+    },
   }
 }

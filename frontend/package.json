@@ -10,6 +10,7 @@
     "test": "node --test \"api/_test/*.test.js\""
   },
   "dependencies": {
+    "@creit.tech/stellar-wallets-kit": "^2.7.1",
     "@stellar/stellar-sdk": "^17.2.1",
     "@supabase/supabase-js": "^2.118.0",
     "qrcode.react": "^4.2.0",

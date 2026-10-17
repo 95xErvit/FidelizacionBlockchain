@@ -70,4 +70,14 @@ export const repoSupabase = {
     if (comercioId) consulta = consulta.eq('comercio_id', comercioId)
     return revisar(await consulta)
   },
+
+  // ── Resumen de la red ──
+  async contarClientes() {
+    const { count, error } = await db().from('clientes').select('id', { count: 'exact', head: true })
+    if (error) throw error
+    return count ?? 0
+  },
+  async totalesMovimientos() {
+    return revisar(await db().from('movimientos').select('tipo, puntos, comercio_id'))
+  },
 }

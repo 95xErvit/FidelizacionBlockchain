@@ -33,6 +33,8 @@ function repoEnMemoria() {
     actualizarComercio: async (id, cambios) => Object.assign(comercios.find((c) => c.id === id), cambios),
     movimientoPorTx: async (h) => { const m = movimientos.find((x) => x.tx_hash === h); return m ? conComercio(m) : null },
     crearMovimiento: async (d) => { const m = { id: uuid(), ...d }; movimientos.push(m); return conComercio(m) },
+    contarClientes: async () => clientes.length,
+    totalesMovimientos: async () => movimientos,
     listarMovimientos: async ({ clienteId, comercioId }) =>
       movimientos.filter((m) => (!clienteId || m.cliente_id === clienteId) && (!comercioId || m.comercio_id === comercioId)).map(conComercio),
   }
@@ -178,4 +180,17 @@ test('un txHash mal formado da 400 antes de tocar la base o la red', async () =>
   const { s } = montar()
   await assert.rejects(() => s.registrarMovimiento({ txHash: 'zz' }), { status: 400 })
   await assert.rejects(() => s.sincronizarComercio({ txHash: '' }), { status: 400 })
+})
+
+test('resumen de la red suma entregas y redenciones', async () => {
+  const { s, repo } = montar({
+    [TX(1)]: { funcion: 'emitir_puntos', args: [ROSA, CAMILA, 25500], retorno: 25 },
+    [TX(2)]: { funcion: 'redimir', args: [PANADERIA, CAMILA, 10], retorno: 15 },
+  })
+  await s.registrarMovimiento({ txHash: TX(1) })
+  await s.registrarMovimiento({ txHash: TX(2) })
+  const r = await s.resumen()
+  assert.deepEqual([r.clientes, r.emitidos, r.redimidos, r.enCirculacion], [1, 25, 10, 15])
+  assert.equal(r.porComercio[repo.comercios[0].id].entregados, 25)
+  assert.equal(r.porComercio[repo.comercios[1].id].recibidos, 10)
 })

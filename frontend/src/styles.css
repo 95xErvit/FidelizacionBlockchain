@@ -540,3 +540,95 @@ input:focus { border-color: var(--azul); outline: none; }
   .cifras dd { font-size: 1.8rem; }
   .acciones { flex-direction: column; }
 }
+
+/* ---------- Integración con Stellar (semana 4) ---------- */
+
+.barra-wallet {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+.barra-wallet a { color: inherit; }
+.barra-wallet .enlace-discreto { color: inherit; opacity: 0.85; }
+
+.estado-inactivo { background: #eceff3; color: var(--tinta-suave); }
+
+.estado-caja {
+  padding: 14px 16px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+/* Pasos de una transacción: simulando → firma → envío → confirmación */
+.tx-pasos {
+  list-style: none;
+  margin: 4px 0 12px;
+  padding: 12px 14px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  display: grid;
+  gap: 6px;
+  font-size: 0.95rem;
+}
+.tx-pasos li { color: var(--tinta-suave); padding-left: 26px; position: relative; }
+.tx-pasos li::before {
+  content: '';
+  position: absolute;
+  left: 4px; top: 0.35em;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--borde);
+}
+.tx-pasos li.hecho { color: var(--verde); }
+.tx-pasos li.hecho::before { background: var(--verde); border-color: var(--verde); }
+.tx-pasos li.actual { color: var(--tinta); font-weight: 700; }
+.tx-pasos li.actual::before {
+  border-color: var(--azul);
+  border-top-color: transparent;
+  animation: girar 0.8s linear infinite;
+}
+.tx-pista { font-weight: 400; color: var(--azul); }
+@keyframes girar { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .tx-pasos li.actual::before { animation: none; border-top-color: var(--azul); }
+}
+
+.tx-error {
+  margin: 4px 0 12px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--rojo);
+  background: #fbeceb;
+  color: #7a1f18;
+  border-radius: 0 var(--radio) var(--radio) 0;
+  display: grid;
+  gap: 8px;
+}
+.tx-error-titulo { font-weight: 700; }
+.tx-error a { color: #7a1f18; }
+.tx-detalle summary { cursor: pointer; font-size: 0.85rem; }
+.tx-detalle code {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--tinta-suave);
+}
+
+.aviso {
+  padding: 10px 12px;
+  border-left: 4px solid var(--amarillo);
+  background: #fdf3d3;
+  color: #5c4500;
+}
+
+.comprobante .hash a { color: inherit; word-break: break-all; }
+
+.lista-tiendas li.pendiente { align-items: flex-start; flex-wrap: wrap; }
+.formulario-compacto { margin-top: 10px; padding: 0; background: none; border: 0; box-shadow: none; }
+.formulario-compacto input.codigo { font-size: 0.85rem; }
+
+.tabla td.acciones { display: flex; gap: 6px; flex-wrap: wrap; }
