@@ -1,0 +1,4 @@
+target/
+.soroban/
+.stellar/
+test_snapshots/
