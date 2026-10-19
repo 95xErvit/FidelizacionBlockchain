@@ -85,3 +85,61 @@ M frontend/vite.config.js (31)
 Patch Links:
 https://github.com/95xErvit/FidelizacionBlockchain/pull/7.patch
 https://github.com/95xErvit/FidelizacionBlockchain/pull/7.diff
+
+Video: https://youtube.com/shorts/mmt4jFE3MXo
+
+# FidelizacionBlockchain · Puntos del Barrio
+
+Red de fidelización inter-comercio sobre Stellar: los puntos que un cliente gana en una tienda del barrio los usa en otra. Cada entrega y redención queda registrada en un contrato propio (Soroban) en la *testnet*.
+
+1. Aprendizajes y ajustes priorizados
+
+Construir el MVP confirmó que el valor está en quitarle fricción al tendero. Tres aprendizajes guiaron los ajustes:
+Don Carlos no va a manejar llaves ni billeteras, así que la custodia delegada desde el backend es indispensable.
+
+Las reglas de campaña deben vivir en el contrato Soroban propio, para que ningún comercio emita puntos sin respaldo.
+
+Cada operación debe mostrar su prueba pública, porque la confianza entre comercios es la razón de usar blockchain.
+
+Antes del cierre se hacen los ajustes: conectar todas las pantallas a la API real y mensajes de error comprensibles (saldo insuficiente, campaña vencida), porque de ellos depende que el flujo completo funcione y se pueda verificar. Quedan pendientes los ajustes: Panel del tendero con totales de puntos emitidos y redimidos y migrar las llaves custodiadas a un gestor seguro: mejoran la escala y la seguridad, pero no frenan la validación del piloto.
+
+2. Riesgos y pendientes
+
+Custodia delegada: Las llaves de comercios y clientes están en el backend
+Baja adopción del tendero por falta de tiempo o de habilidad digital
+Que los puntos se interpreten como medio de pago ante la regulación
+Tratamiento de datos personales
+Dependencia de que testnet y Friendbot estén disponibles
+Contrato sin auditoría externa
+
+Pendientes técnicos: pruebas unitarias automatizadas del contrato, una base de datos en lugar del archivo local, autenticación de usuarios en el front, monitoreo de errores y un tablero de métricas para el piloto.
+Pendientes de negocio:
+Elegir la zona y los primeros cinco comercios.
+Definir el catálogo de beneficios de cada comercio.
+Calcular el costo de operación por cliente fidelizado.
+Acordar cómo se compensan los comercios cuando un cliente redime puntos en una tienda distinta a la que los dio.
+
+3. Plan de validación con usuarios
+
+A quiénes. Al usuario definido en el Problem Brief: los tenderos de barrio (persona "Don Carlos", 55 años, poca adopción digital) y sus clientes frecuentes. El piloto incluye entre 5 y 10 comercios de una misma zona y entre 50 y 100 clientes.
+Hipótesis. Si los tenderos pueden dar puntos de forma sencilla y los clientes pueden usarlos en varios comercios, suben la participación, la frecuencia de compra y la retención, siempre que el costo de operación sea menor que el valor que se genera.
+Métodos.
+Pruebas de usabilidad moderadas (semana 1): cinco tenderos registran una compra y una redención sin ayuda. Se miden el tiempo, los errores y la comprensión.
+
+Entrevistas semiestructuradas (semanas 1 y 4): sobre el valor que perciben, la confianza en los puntos de otros comercios y la disposición a pagar.
+
+Piloto en operación real (4 semanas): el contrato registra los puntos dados y redimidos, y la frecuencia de compra se compara con una línea base de las dos semanas anteriores.
+
+Encuesta corta a clientes (semana 4): satisfacción y probabilidad de recomendar.
+
+Hipotesis y Supuestos 
+
+El tendero da puntos de forma sencilla (Tiempo para registrar una compra) ≥ 80 % de los tenderos lo logran en menos de 30 segundos sin ayuda.
+Los clientes participan (Clientes registrados que acumulan puntos) ≥ 60 % de los clientes invitados.
+La red es interoperable (Redenciones en un comercio distinto al que dio los puntos) ≥ 20 % del total de redenciones.
+Aumenta la frecuencia (Visitas por cliente al mes frente a la línea base) Aumento ≥ 15 % 
+Aumenta la retención (Clientes recurrentes) ≥ 40 % de los clientes con dos o más compras en el periodo
+El modelo es sostenible (Costo de operación por cliente fidelizado) Menor que el margen adicional generado
+
+Decisión. Si se cumplen al menos cuatro de los seis criterios, se pasa a una segunda zona. Si no, se ajustan el flujo o las reglas de campaña y se repite el ciclo.
+
