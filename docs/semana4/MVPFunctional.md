@@ -86,5 +86,5 @@ Patch Links:
 https://github.com/95xErvit/FidelizacionBlockchain/pull/7.patch
 https://github.com/95xErvit/FidelizacionBlockchain/pull/7.diff
 
-Video: https://youtube.com/shorts/mmt4jFE3MXo
+Video: https://youtube.com/shorts/ltsez6AYKT8
 
