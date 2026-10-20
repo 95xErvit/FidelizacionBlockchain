@@ -4,7 +4,7 @@ Red de fidelización entre comercios locales sobre Stellar. Los clientes acumula
 
 - **Aplicación:** [fidelizacion-blockchain.vercel.app](https://fidelizacion-blockchain.vercel.app)
 - **Contrato en testnet:** [CD2DSWC6...OFVM](https://stellar.expert/explorer/testnet/contract/CD2DSWC6KSG64OTMF4Q4D2B2NFAZ4YXJDO7QXFY7NZXDM3P7LL3ZOFVM)
-- **MVP funcional:** [docs/semana4/MVPFunctional.md.md](docs/semana4/MVPFunctional.md.md)
+- **MVP funcional:** [docs/semana4/MVPFunctional.md.md](docs/semana4/MVPFunctional.md)
 - **Evidencia de despliegue:** [contracts/deploy-testnet.out.md](contracts/deploy-testnet.out.md)
 
 ## Estructura
