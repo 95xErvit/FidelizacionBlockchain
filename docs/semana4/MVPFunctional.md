@@ -101,7 +101,7 @@ M frontend/vite.config.js (31)
 
 **Repositorio:** [95xErvit/FidelizacionBlockchain](https://github.com/95xErvit/FidelizacionBlockchain) · **App:** [fidelizacion-blockchain.vercel.app](https://fidelizacion-blockchain.vercel.app) · **Contrato (testnet):** [CD2DSWC6…OFVM](https://stellar.expert/explorer/testnet/contract/CD2DSWC6KSG64OTMF4Q4D2B2NFAZ4YXJDO7QXFY7NZXDM3P7LL3ZOFVM)
 
-##Video: https://youtube.com/shorts/ltsez6AYKT8
+##**Video**: https://youtube.com/shorts/ltsez6AYKT8
 
 *Lo construido esta semana:** implementamos la Opción A del Entregable 3, un contrato propio en Soroban (`contracts/`). Tiene 17 pruebas y está desplegado en testnet, con funciones para registrar comercios, emitir puntos, redimir, aplicar el límite mensual por tienda, definir reglas y vencer puntos. Agregamos un backend con funciones de Vercel (`frontend/api/`) que guarda los movimientos en Supabase solo después de verificar cada transacción en la red. El front ya no usa datos simulados: conecta la wallet con Stellar Wallets Kit y Freighter, firma de verdad las operaciones `emitir_puntos`, `redimir` y `registrar_comercio`, y traduce los errores del contrato a lenguaje claro.
 
